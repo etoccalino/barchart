@@ -1,3 +1,20 @@
+#! /usr/bin/env python
+
+# Copyright 2012 Elvio Toccalino
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 """
 Produce a bar chart of file/directory sizes.
 
@@ -5,11 +22,15 @@ Given a stream of lines, this program assumes each line corresponds to a
 directory, and is formatted as "directory-size directory-name" (as produced by
 the *du* UNIX command), it will adorn the lines with a row of chars. All these
 rows can then be interpreted as a 90 degree rotated bar chart, each row
-corresponding to the size of that particular file/directory relative to the total.
+corresponding to the size of that particular file/directory relative to the
+total.
 
 The total size (size of the parent directory) is assume to be listed as the
 last line in the input stream, just as the *du* UNIX command does.
 """
+
+# Python2.6 and ahead can override the 'print' built-in with a function.
+from __future__ import print_function
 
 import re
 import io
@@ -108,14 +129,14 @@ class SizeProcessor:
     def _format_line(self, size, line):
         """Build a line appropriate for output, using local configuration."""
         relative = size / self.last_size
-        chars = round(relative * self.WIDTH)
-        bar = ' ' * (self.WIDTH - chars) + self.CHAR * chars
-        return bar + ' ' + line
+        chars = int(round(relative * self.WIDTH))
+        bar = u' ' * (self.WIDTH - chars) + self.CHAR * chars
+        return bar + u' ' + line
 
     def _format_last_line(self, size, line):
         """Build the last line for the output."""
-        bar = '=' * self.WIDTH
-        return bar + ' ' + line
+        bar = u'=' * self.WIDTH
+        return bar + u' ' + line
 
     def feed(self, line):
         """Feed a line to the processor.

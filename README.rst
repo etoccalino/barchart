@@ -2,15 +2,15 @@
  barchart
 ==========
 
-A *UNIX-like program* to pipe ``du`` output through and gain a bar chart of file sizes.
+A UNIX-like program to pipe ``du`` output through and gain a bar chart of file sizes.
 
 
 Description
 ===========
 
-What's the most used program in the terminal? ``ls``, of course! Yes, it is! (I don't care if that's not true for you, this is not a survey). But ``ls``, good as the antediluvians made it, does not traverse the file-system. It merely gives infomation it obtains one level deep. Who goes deeper? ``du`` goes as deep as it can, or as deep as you tell it to go... shiny.
+What's the most used program in the terminal? ``ls``, of course! Yes, it is! *(I don't care if that's not true for you, this is not a survey)*. But ``ls``, good as the antediluvians made it, does not traverse the file-system. It merely gives information it obtains one level deep. Who goes deeper? ``du`` goes as deep as it can, or as deep as you tell it to go... shiny.
 
-I developed ``barchart`` with a very specific ``du`` usecase in mind: inspecting a directory one level deep. This is a very recurring pattern in my day to day expericience. ``barchart`` leaves its input *almost* as-is; it adorns it with a bar chart of the sizes reported by ``du``, or whatever program laied up in the pipe. The terminal is a very limited canvas (and due to my scarce ascii-art skills, double so), but the bar chart is conveniently located on the side of the output, rotated 90-degrees, so that each bar is aligned with the ``du`` reported size to which it corresponds. The results are satisfactory.
+I developed ``barchart`` with a very specific ``du`` use case in mind: inspecting a directory one level deep. This is a very recurring pattern in my day to day experience. ``barchart`` leaves its input *almost* as-is; it adorns it with a bar chart of the sizes reported by ``du``, or whatever program laid up in the pipe. The terminal is a very limited canvas (and due to my scarce ascii-art skills, doubly so), but the bar chart is conveniently located on the side of the output, rotated 90-degrees, so that each bar is aligned with the ``du`` reported size to which it corresponds. The results are satisfactory.
 
 
 Example Usage
@@ -18,7 +18,7 @@ Example Usage
 
 The simplest command which can benefit from ``barchart`` ::
 
-  du -d 1 | python barchart
+  du -d 1 | barchart
 
 The output of which reads like this::
 
@@ -51,6 +51,15 @@ Which will result in::
            # 22M	./prototipo-tazas
   ========== 235M	.
 
+..note::
+  In this README file, the example outputs are indented for convenience. In the wild, you'd see the large "=" bar (showing the total size of the whole directory) without space to the left.
+
+
+Compatibility
+=============
+
+The program is python2 (2.6 and ahead) **and** python3 compatible. Since you can use whatever python you have (as long as its python2.6 or ahead) I make it an executable by means of a shebang comment.
+
 
 Options
 =======
@@ -64,3 +73,9 @@ Limitations
 ===========
 
 - Why one level deep? what if I break this rule?
+
+
+License
+=======
+
+The ``barchart`` program file is licensed under the GNU GPL version 3.0. A copy of the license is included with the program. For details about the license, visit http://www.gnu.org/licenses/gpl.html.
