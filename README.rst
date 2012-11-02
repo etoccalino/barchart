@@ -2,7 +2,7 @@
  barchart
 ==========
 
-A UNIX program to pipe "du" output and gain a barchart of file sizes.
+A *UNIX-like program* to pipe ``du`` output through and gain a bar chart of file sizes.
 
 
 Description
@@ -18,7 +18,7 @@ Example Usage
 
 The simplest command which can benefit from ``barchart`` ::
 
-  du -d 1 | barchart
+  du -d 1 | python barchart
 
 The output of which reads like this::
 
@@ -34,7 +34,7 @@ The output of which reads like this::
   ========== 240056	.
 
 
-But usually you don't care about the precise byte count. The helpful *-h* option turns byte numbers into more *human readable* numbers. ``barchart`` can eat that output as well. The example turns into::
+But usually you don't care about the precise byte count. The helpful **-h** option turns byte numbers into more *human readable* numbers. ``barchart`` can eat that output as well. The example turns into::
 
   du -d 1 -h | barchart
 
