@@ -34,7 +34,6 @@ from __future__ import print_function
 
 import re
 import io
-import sys
 
 
 # This is used as part of of a regexp, so escape as necessary.
@@ -96,7 +95,6 @@ class SizeProcessor:
                        + self.DECIMAL_DOT + r'?'
                        + r'(?P<decimal_part>\d+)?'
                        + r'(?P<mod>[' + ''.join(SIZEMODS.keys()) + r'])?')
-
 
     def _size_for_line(self, line, line_number=None):
         """Given a line, which should start with a size, return its absolute
@@ -191,24 +189,23 @@ class SizeProcessor:
 
 
 import argparse
+import sys
+
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--decimal-char", default=DECIMAL_DOT,  help="Character "
-                    "which breaks franctions (default is '.').")
+parser.add_argument("-d", "--decimal-char", default=DECIMAL_DOT,
+                    help="Character which breaks franctions (default is '.').")
 parser.add_argument("-c", "--char", help="Which character to use for the "
                     "bars (default is '%s')." % CHAR)
 parser.add_argument("-w", "--width", type=int, default=WIDTH, help="Width of "
                     "bars in the chart (default is %i)." % WIDTH)
 
 
-###############################################################################
-
-
 if __name__ == "__main__":
     args = parser.parse_args()
 
     h = SizeProcessor(decimal_dot=args.decimal_char,
-                       char=args.char, width=args.width)
-    for line in sys.stdin:
+                      char=args.char, width=args.width)
+    for line in sys.stdin.readlines():
         h.feed(line)
     print(h.getvalue())
