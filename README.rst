@@ -51,7 +51,7 @@ Which will result in::
            # 22M	./prototipo-tazas
   ========== 235M	.
 
-..note::
+.. note::
   In this README file, the example outputs are indented for convenience. In the wild, you'd see the large "=" bar (showing the total size of the whole directory) without space to the left.
 
 
