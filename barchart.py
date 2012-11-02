@@ -73,6 +73,14 @@ class SizeProcessor:
     """
 
     def __init__(self, decimal_dot=None, char=None, width=None):
+        """Initialize the configurable output related variables.
+
+        Keyword parameters:
+        decimal_dot -- configure fractional character (default '.').
+        char -- character to build the bars with (default %(char)s).
+        width -- maximum number of characters for the bar (default %(width)s).
+        """
+
         # Allow for configuration override.
         self.DECIMAL_DOT = decimal_dot or DECIMAL_DOT
         self.CHAR = char or CHAR
@@ -91,17 +99,17 @@ class SizeProcessor:
 
 
     def _size_for_line(self, line, line_number=None):
-        """Given a line, which should start with a size, return a its absolute
+        """Given a line, which should start with a size, return its absolute
         size value.
 
         If a line number is passed it will be used in case an error report is
         issued.
 
         Positional parameters:
-        line -- (string) the line to process.
+        line -- the string to process.
 
         Keyword paramters:
-        line_number -- (int, optional) the line number of the line passed
+        line_number -- the line number of the line (default auto-incremental).
         """
         match = self.size_re.match(line)
         if match is None:
@@ -127,14 +135,24 @@ class SizeProcessor:
         return size
 
     def _format_line(self, size, line):
-        """Build a line appropriate for output, using local configuration."""
+        """Build a line appropriate for output, using local configuration.
+
+        Positional parameters:
+        size -- the size read from this line.
+        line -- the line contents, including the size part.
+        """
         relative = size / self.last_size
         chars = int(round(relative * self.WIDTH))
         bar = u' ' * (self.WIDTH - chars) + self.CHAR * chars
         return bar + u' ' + line
 
     def _format_last_line(self, size, line):
-        """Build the last line for the output."""
+        """Build the last line for the output.
+
+        Positional parameters:
+        size -- the size read from this line.
+        line -- the line contents, including the size part.
+        """
         bar = u'=' * self.WIDTH
         return bar + u' ' + line
 
@@ -142,6 +160,10 @@ class SizeProcessor:
         """Feed a line to the processor.
 
         Assumes the lines are fed in order, and counts them.
+
+
+        Positional parameters:
+        line -- the entire line to process.
         """
         self.line_count += 1
         line_size = self._size_for_line(line, line_number=self.line_count)
