@@ -126,7 +126,7 @@ class SizeProcessor:
         # If there is a decimal part, add it.
         size_decimal_part = match.group('decimal_part')
         if size_decimal_part:
-            size += float(size_decimal_part)
+            size += float(size_decimal_part) / 10.0
 
         # The size may be expressed with a mod-factor.
         mod = match.group('mod')
@@ -141,8 +141,9 @@ class SizeProcessor:
         size -- the size read from this line.
         line -- the line contents, including the size part.
         """
-        relative = size / self.last_size
+        relative = float(size) / float(self.last_size)
         chars = int(round(relative * self.WIDTH))
+
         bar = u' ' * (self.WIDTH - chars) + self.CHAR * chars
         return bar + u' ' + line
 
