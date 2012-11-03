@@ -30,7 +30,7 @@ last line in the input stream, just as the *du* UNIX command does.
 """
 
 import re
-import io
+from cStringIO import StringIO
 
 
 # This is used as part of of a regexp, so escape as necessary.
@@ -170,7 +170,7 @@ class SizeProcessor:
 
     def getvalue(self):
         """Produce the output, with their bar chart."""
-        buffered = io.StringIO()
+        buffered = StringIO()
 
         # Get the total size and generate the adorned line.
         self.last_size, last_line = self.queue.pop()
