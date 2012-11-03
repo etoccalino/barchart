@@ -29,8 +29,8 @@ The output of which reads like this::
              5244	./C
            # 18508	./grampg-env
           ## 39564	./Haskell
-        #### 92068	./artv-env
-           # 21644	./prototipo-tazas
+        #### 92068	./secret-env
+           # 21644	./prototipo-secret
   ========== 240056	.
 
 
@@ -47,8 +47,8 @@ Which will result in::
              5.2M	./C
            # 19M	./grampg-env
           ## 39M	./Haskell
-        #### 90M	./artv-env
-           # 22M	./prototipo-tazas
+        #### 90M	./secret-env
+           # 22M	./prototipo-secret
   ========== 235M	.
 
 .. note::
@@ -58,7 +58,9 @@ Which will result in::
 Compatibility
 =============
 
-The program is python2 (2.6 and ahead) **and** python3 compatible. Since you can use whatever python you have (as long as its python2.6 or ahead) I make it an executable by means of a shebang comment.
+The program is python2 compatible (2.6 and ahead tested). I have made, however, a python3 version, aided by the 2to3 tool. You should use only one version of the program.  Since you can choose whatever python you have (as long as its python2.6 or ahead) I make it an executable by means of a shebang comment.
+
+The most visible version of the program is for python2, because I found it to be ubiquitous among modern UNIX-like systems. However, I recommend that if you already have python3 installed in your system you use the py3k/barchart.py program instead.
 
 
 Options
