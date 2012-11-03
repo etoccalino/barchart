@@ -29,9 +29,6 @@ The total size (size of the parent directory) is assume to be listed as the
 last line in the input stream, just as the *du* UNIX command does.
 """
 
-# Python2.6 and ahead can override the 'print' built-in with a function.
-from __future__ import print_function
-
 import re
 import io
 
@@ -39,6 +36,7 @@ import io
 # This is used as part of of a regexp, so escape as necessary.
 DECIMAL_DOT = r'\.'
 CHAR = "#"
+TOTAL_CHAR = "="
 WIDTH = 10
 
 SIZEMODS = {
@@ -71,18 +69,21 @@ class SizeProcessor:
     lines.
     """
 
-    def __init__(self, decimal_dot=None, char=None, width=None):
+    def __init__(self, decimal_dot=None, char=None, width=None,
+                 total_char=None):
         """Initialize the configurable output related variables.
 
         Keyword parameters:
-        decimal_dot -- configure fractional character (default '.').
-        char -- character to build the bars with (default %(char)s).
-        width -- maximum number of characters for the bar (default %(width)s).
+        decimal_dot -- configure fractional character (optional).
+        char -- character to build the bars with (optional).
+        width -- maximum number of characters for the bar (optional).
+        totalchar -- character for the final line (optional).
         """
 
         # Allow for configuration override.
         self.DECIMAL_DOT = decimal_dot or DECIMAL_DOT
         self.CHAR = char or CHAR
+        self.TOTAL_CHAR = total_char or TOTAL_CHAR
         self.WIDTH = width or WIDTH
         # Init inner values.
         self.queue = []
@@ -152,14 +153,13 @@ class SizeProcessor:
         size -- the size read from this line.
         line -- the line contents, including the size part.
         """
-        bar = u'=' * self.WIDTH
+        bar = self.TOTAL_CHAR * self.WIDTH
         return bar + u' ' + line
 
     def feed(self, line):
         """Feed a line to the processor.
 
         Assumes the lines are fed in order, and counts them.
-
 
         Positional parameters:
         line -- the entire line to process.
@@ -193,19 +193,23 @@ import sys
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-w", "--width", type=int, default=WIDTH,
+                    help="Width of bars in the chart (default is %i)." % WIDTH)
+parser.add_argument("-c", "--char", default=CHAR,
+                    help="Which character to use for the bars (default is"
+                    " '%s')." % CHAR)
+parser.add_argument("-t", "--total-char", default=TOTAL_CHAR,
+                    help="Which character to use for the finalizing line (the"
+                    " total size) (default is '%s')." % TOTAL_CHAR)
 parser.add_argument("-d", "--decimal-char", default=DECIMAL_DOT,
-                    help="Character which breaks franctions (default is '.').")
-parser.add_argument("-c", "--char", help="Which character to use for the "
-                    "bars (default is '%s')." % CHAR)
-parser.add_argument("-w", "--width", type=int, default=WIDTH, help="Width of "
-                    "bars in the chart (default is %i)." % WIDTH)
+                    help="Character which breaks fractions (default is '.').")
 
 
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    h = SizeProcessor(decimal_dot=args.decimal_char,
-                      char=args.char, width=args.width)
-    for line in sys.stdin.readlines():
+    h = SizeProcessor(width=args.width, total_char=args.total_char,
+                      char=args.char, decimal_dot=args.decimal_char)
+    for line in sys.stdin:
         h.feed(line)
-    print(h.getvalue())
+    print h.getvalue()
