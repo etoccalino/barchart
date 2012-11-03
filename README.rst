@@ -10,7 +10,7 @@ Description
 
 What's the most used program in the terminal? ``ls``, of course! Yes, it is! *(I don't care if that's not true for you, this is not a survey)*. But ``ls``, good as the antediluvians made it, does not traverse the file-system. It merely gives information it obtains one level deep. Who goes deeper? ``du`` goes as deep as it can, or as deep as you tell it to go... shiny.
 
-I developed ``barchart`` with a very specific ``du`` use case in mind: inspecting a directory one level deep. This is a very recurring pattern in my day to day experience. ``barchart`` leaves its input *almost* as-is; it adorns it with a bar chart of the sizes reported by ``du``, or whatever program laid up in the pipe. The terminal is a very limited canvas (and due to my scarce ascii-art skills, doubly so), but the bar chart is conveniently located on the side of the output, rotated 90-degrees, so that each bar is aligned with the ``du`` reported size to which it corresponds. The results are satisfactory.
+I developed ``barchart`` with a very specific ``du`` use case in mind: inspecting a directory one level deep, but still inspecting full directory sizes. This is a very recurring pattern in my day to day experience. ``barchart`` leaves its input *almost* as-is; it adorns it with a bar chart of the sizes reported by ``du``, or whatever program laid up in the pipe. The terminal is a very limited canvas (and due to my scarce ascii-art skills, doubly so), but the bar chart is conveniently located on the side of the output, rotated 90-degrees, so that each bar is aligned with the ``du`` reported size to which it corresponds. The results are satisfactory.
 
 
 Example Usage
@@ -78,14 +78,23 @@ The most visible version of the program is for python2, because I found it to be
 Options
 =======
 
-- Change the columns character.
-- Change column size.
+Help
+    The **-h** or **--help** will show all necessary information to use the program, rendering the rest of this section redundant.
+
+Chart width
+    Using the **-w** or **--width** options you can allocate any amount of space for the bars, which translates to greater accuracy (and more indentation of original input).
+
+Bars character
+    You can select which character to use when building the bars of the chart with the **-c** or **--char** option.
+
+Finalizing line character
+    At the bottom of the chart, along the total size reported, a stright line (corresponding to 100%) is drawn using the character selected with the **-t** or **--total-char** option.
 
 
 Limitations
 ===========
 
-- Why one level deep? what if I break this rule?
+Why one level deep when calling ``du``? what if I omit the **-d 1** option? In that case the numbers reported by ``du`` correspond to sizes which are added up level by level (e. g. a directory, parent of a nested directory, sums that child directory's size in its own) and the chart is no longer correct.
 
 
 License
