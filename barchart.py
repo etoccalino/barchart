@@ -191,6 +191,7 @@ class SizeProcessor:
 import argparse
 import sys
 import locale
+import codecs
 
 
 parser = argparse.ArgumentParser()
@@ -216,6 +217,6 @@ if __name__ == "__main__":
     h = SizeProcessor(width=args.width, total_char=args.total_char,
                       char=args.char, decimal_dot=DECIMAL_DOT)
 
-    for line in sys.stdin:
+    for line in codecs.getreader('utf8')(sys.stdin):
         h.feed(line)
     print h.getvalue()
