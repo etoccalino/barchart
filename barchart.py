@@ -190,6 +190,7 @@ class SizeProcessor:
 
 import argparse
 import sys
+import locale
 
 
 parser = argparse.ArgumentParser()
@@ -201,15 +202,20 @@ parser.add_argument("-c", "--char", default=CHAR,
 parser.add_argument("-t", "--total-char", default=TOTAL_CHAR,
                     help="Which character to use for the finalizing line (the"
                     " total size) (default is '%s')." % TOTAL_CHAR)
-parser.add_argument("-d", "--decimal-char", default=DECIMAL_DOT,
-                    help="Character which breaks fractions (default is '.').")
 
 
 if __name__ == "__main__":
+    # Get the decimal point for this machine.
+    decimal_dot = locale.localeconv()['decimal_point']
+    if decimal_dot != '.':
+        # Assume it does not require escape for use in a RE.
+        DECIMAL_DOT = decimal_dot
+
     args = parser.parse_args()
 
     h = SizeProcessor(width=args.width, total_char=args.total_char,
-                      char=args.char, decimal_dot=args.decimal_char)
+                      char=args.char, decimal_dot=DECIMAL_DOT)
+
     for line in sys.stdin:
         h.feed(line)
     print h.getvalue()
