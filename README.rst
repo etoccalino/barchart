@@ -55,6 +55,18 @@ Which will result in::
   In this README file, the example outputs are indented for convenience. In the wild, you'd see the large "=" bar (showing the total size of the whole directory) without space to the left.
 
 
+Script it!
+==========
+
+If you find the ``barchart`` program attractive, and think it might be useful, I urge you to try it by building a wrapper-script to have ``barchart`` extend ``du``, in the following fashion::
+
+  #! /usr/bin
+
+  du -d 1 $@ | barchart -c :
+
+Hardcoding options to the ``barchart`` program like the ':' bars above. Assuming you call that script ``dub`` you can later just type ``dub some-dir`` and have a prettier output.
+
+
 Compatibility
 =============
 
@@ -68,7 +80,6 @@ Options
 
 - Change the columns character.
 - Change column size.
-
 
 
 Limitations
