@@ -30,7 +30,7 @@ last line in the input stream, just as the *du* UNIX command does.
 """
 
 import re
-from cStringIO import StringIO
+from io import StringIO
 
 
 # This is used as part of of a regexp, so escape as necessary.
@@ -95,7 +95,7 @@ class SizeProcessor:
         self.size_re = re.compile(r'^\s*(?P<integer_part>\d+)'
                        + self.DECIMAL_DOT + r'?'
                        + r'(?P<decimal_part>\d+)?'
-                       + r'(?P<mod>[' + ''.join(SIZEMODS.keys()) + r'])?')
+                       + r'(?P<mod>[' + ''.join(list(SIZEMODS.keys())) + r'])?')
 
     def _size_for_line(self, line, line_number=None):
         """Given a line, which should start with a size, return its absolute
@@ -143,8 +143,8 @@ class SizeProcessor:
         relative = float(size) / float(self.last_size)
         chars = int(round(relative * self.WIDTH))
 
-        bar = u' ' * (self.WIDTH - chars) + self.CHAR * chars
-        return bar + u' ' + line
+        bar = ' ' * (self.WIDTH - chars) + self.CHAR * chars
+        return bar + ' ' + line
 
     def _format_last_line(self, size, line):
         """Build the last line for the output.
@@ -154,7 +154,7 @@ class SizeProcessor:
         line -- the line contents, including the size part.
         """
         bar = self.TOTAL_CHAR * self.WIDTH
-        return bar + u' ' + line
+        return bar + ' ' + line
 
     def feed(self, line):
         """Feed a line to the processor.
@@ -217,6 +217,6 @@ if __name__ == "__main__":
     h = SizeProcessor(width=args.width, total_char=args.total_char,
                       char=args.char, decimal_dot=DECIMAL_DOT)
 
-    for line in codecs.getreader('utf8')(sys.stdin):
+    for line in sys.stdin:
         h.feed(line)
-    print h.getvalue()
+    print(h.getvalue())
