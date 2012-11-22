@@ -97,26 +97,21 @@ class SizeProcessor:
                        + r'(?P<decimal_part>\d+)?'
                        + r'(?P<mod>[' + ''.join(list(SIZEMODS.keys())) + r'])?')
 
-    def _size_for_line(self, line, line_number=None):
+    def _size_for_line(self, line):
         """Given a line, which should start with a size, return its absolute
         size value.
 
-        If a line number is passed it will be used in case an error report is
-        issued.
+        The line number, as counted by the processor, is passed it will be used
+        in case an error report is issued.
 
         Positional parameters:
         line -- the string to process.
-
-        Keyword paramters:
-        line_number -- the line number of the line (default auto-incremental).
         """
         match = self.size_re.match(line)
         if match is None:
             # Report the error.
-            errorstring = 'The line does not match the "space-size-mod" schema'
-            if line_number:
-                errorstring = ('Line number %i does not match the'
-                               ' "space-size-mod" schema' % line_number)
+            errorstring = ('Line number %i does not match the'
+                           ' "space-size-mod" schema' % self.line_count)
             raise ImproperLineError(errorstring)
 
         # Integer part of the size.
@@ -165,7 +160,7 @@ class SizeProcessor:
         line -- the entire line to process.
         """
         self.line_count += 1
-        line_size = self._size_for_line(line, line_number=self.line_count)
+        line_size = self._size_for_line(line)
         self.queue.append((line_size, line))
 
     def getvalue(self):
