@@ -117,7 +117,7 @@ class SizeProcessor:
             if line_number:
                 errorstring = ('Line number %i does not match the'
                                ' "space-size-mod" schema' % line_number)
-                raise ImproperLineError(errorstring)
+            raise ImproperLineError(errorstring)
 
         # Integer part of the size.
         size = int(match.group('integer_part'))
@@ -125,7 +125,7 @@ class SizeProcessor:
         # If there is a decimal part, add it.
         size_decimal_part = match.group('decimal_part')
         if size_decimal_part:
-            size += float(size_decimal_part) / 10.0
+            size += float(size_decimal_part) / 10
 
         # The size may be expressed with a mod-factor.
         mod = match.group('mod')
