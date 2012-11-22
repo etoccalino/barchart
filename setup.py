@@ -3,7 +3,7 @@ setup(
     name = "barchart",
     version = "0.5",
     py_modules = ['barchar'],
-    scripts = ["barchart.py"],
+    scripts = ["bin/barchart.py", "bin/dub"],
 
     package_data = {
         '': ['*.rst', '*.rst'],
