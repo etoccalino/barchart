@@ -1,3 +1,3 @@
 #! /bin/bash
 
-du -d 1 $@ | barchart
+du -h -d 1 $@ | barchart
