@@ -65,7 +65,7 @@ Which will result in::
   ========== 235M	.
 
 .. note::
-  In this README file, the example outputs are indented for convenience. In the wild, you'd see the large "=" bar (showing the total size of the whole directory) without space to the left.
+  If you are reading this README file as reStructuredText source, the example outputs are indented for convenience. In the wild, you'd see the large "=" bar (showing the total size of the whole directory) without space to the left.
 
 
 Script it!
@@ -80,6 +80,16 @@ If you find the ``barchart`` program attractive, and think it might be useful, I
 Hardcoding options to the ``barchart`` program like the ':' bars above. Assuming you call that script ``dub`` you can later just type ``dub some-dir`` and have a prettier output.
 
 A copy of the above ``dub`` script is included. It's provided ready for use, but also simple to tailor to your needs.
+
+
+Installation
+============
+
+To install ``barchart``, clone this repository and run::
+
+  python setup.py install
+
+This will install both the ``barchart`` program and the ``dub`` script into your python ecosystem. Do read the following section on `compatibility`_, though. If you experience not-so-nice-looking charts, refer to the notes in the `options`_ section regarding the *decimal dot* symbol.
 
 
 Compatibility
