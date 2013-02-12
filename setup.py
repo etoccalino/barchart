@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name = "barchart",
-    version = "0.5",
+    version = "0.6",
     py_modules = ['barchar'],
     scripts = ["bin/barchart", "bin/dub"],
 
